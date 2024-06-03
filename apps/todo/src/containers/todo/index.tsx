@@ -9,6 +9,7 @@ import { ITodoItem } from "src/@types/Todo";
 import { TodoContext } from "src/context/TodoContext";
 import { deleteTodo, updateTodo } from "src/reducer/todo/action";
 import apiUrl from "src/config";
+import axios from "axios";
 
 const TodoContainer: FC = () => {
   const { state, dispatch } = useContext(TodoContext);
@@ -42,10 +43,9 @@ const TodoContainer: FC = () => {
     e.stopPropagation();
     console.log(id);
 
-    const response = await fetch(`${apiUrl}/todos/delete/${id}`, {
-      method: "Delete",
-    })
-      .then((response) => response.json())
+    const response = await axios
+      .delete(`${apiUrl}/todos/delete/${id}`)
+      .then((response) => response.data)
       .catch((error) => console.error(error))
       .finally(() => dispatch(deleteTodo(id)));
 
@@ -56,17 +56,11 @@ const TodoContainer: FC = () => {
 
   const handleComplete = async (e: ChangeEvent, id: string) => {
     e.stopPropagation();
-    const result = await fetch(`${apiUrl}/todos/updateStatus/${id}`, {
-      method: "PATCH",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    const result = await axios
+      .patch(`${apiUrl}/todos/updateStatus/${id}`, {
         status: "completed",
-      }),
-    })
-      .then((response) => response.json())
+      })
+      .then((response) => response.data)
       .catch((error) => console.error(error));
 
     dispatch(updateTodo(result.todo));

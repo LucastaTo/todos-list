@@ -24,6 +24,7 @@ import { ITodoItem } from "src/@types/Todo";
 import { TodoContext } from "src/context/TodoContext";
 import { addTodo, updateTodo } from "src/reducer/todo/action";
 import apiUrl from "src/config";
+import axios from "axios";
 
 interface IProps {
   onClose: (isChange: boolean) => void;
@@ -92,30 +93,19 @@ const TodoModal: FC<IProps> = memo(({ show, onClose, todo }) => {
     setLoading(true);
     if (handleError()) {
       if (todo?._id) {
-        const result = await fetch(`${apiUrl}/todos/update/${todo?._id}`, {
-          method: "PATCH",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
+        const result = await axios
+          .patch(`${apiUrl}/todos/update/${todo?._id}`, {
             title: newTodo?.title,
             desc: newTodo?.desc,
             color: newTodo?.color,
-          }),
-        })
-          .then((response) => response.json())
+          })
+          .then((response) => response.data)
           .catch((error) => console.error(error));
 
         dispatch(updateTodo(result.todo));
       } else {
-        const result = await fetch(`${apiUrl}/todos/create`, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
+        const result = await axios
+          .post(`${apiUrl}/todos/create`, {
             ...{
               title: newTodo?.title || "",
               desc: newTodo?.desc || "",
@@ -124,9 +114,8 @@ const TodoModal: FC<IProps> = memo(({ show, onClose, todo }) => {
               status: newTodo?.status || "pending",
             },
             author: authorId,
-          }),
-        })
-          .then((response) => response.json())
+          })
+          .then((response) => response.data)
           .catch((error) => console.error(error));
 
         dispatch(addTodo(result.todo));

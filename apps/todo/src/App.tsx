@@ -8,6 +8,7 @@ import { TodoProvider } from "src/context/TodoContext";
 import { randomString } from "./helpers";
 import { setAuthor } from "./reducer/author/action";
 import apiUrl from "./config";
+import axios from "axios";
 
 const ErrorNotFound = lazy(() => import("./pages/error-404"));
 const Todo = lazy(() => import("./pages/todo"));
@@ -25,15 +26,11 @@ function App() {
 
   const createAuthorByDispatch = async (objectId: string) => {
     const createAuthor = async () => {
-      const response = await fetch(`${apiUrl}/authors/create`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ objectId }),
-      })
-        .then((response) => response.json())
+      const response = await axios
+        .post(`${apiUrl}/authors/create`, {
+          objectId,
+        })
+        .then((response) => response.data)
         .catch((error) => console.error(error));
       return response;
     };

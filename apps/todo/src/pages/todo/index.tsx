@@ -5,6 +5,7 @@ import TodoContainer from "src/containers/todo";
 import { TodoContext } from "src/context/TodoContext";
 import { setTodosList } from "src/reducer/todo/action";
 import apiUrl from "src/config";
+import axios from "axios";
 
 const Todo: React.FC = () => {
   const { dispatch } = useContext(TodoContext);
@@ -14,8 +15,9 @@ const Todo: React.FC = () => {
   }, []);
 
   const getTodosListByDispatch = async (authorId: string) => {
-    const result = await fetch(`${apiUrl}/todos/get?authorId=${authorId}`)
-      .then((response) => response.json())
+    const result = await axios
+      .get(`${apiUrl}/todos/get?authorId=${authorId}`)
+      .then((response) => response.data)
       .catch((error) => console.error(error));
 
     dispatch(setTodosList(result.todos));
