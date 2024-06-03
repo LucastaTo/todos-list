@@ -1,0 +1,29 @@
+{
+  "name": "@todo/shared",
+  "version": "0.0.0",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "MIT",
+  "scripts": {
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "eslint": "^8.57.0",
+    "eslint-config-custom": "*",
+    "react": "^18.2.0",
+    "typescript": "^5.3.3",
+    "tsconfig": "*",
+    "@types/node": "^14.14.21",
+    "@types/react-transition-group": "^4.4.1",
+    "@types/styled-system": "^5.1.22",
+    "@types/styled-system__theme-get": "^5.0.4",
+    "@types/tinycolor2": "^1.4.6"
+  },
+  "dependencies": {
+    "@styled-system/theme-get": "^5.1.2",
+    "styled-bootstrap-grid": "^3.1.2",
+    "styled-system": "^5.1.5",
+    "tinycolor2": "^1.6.0"
+  }
+}

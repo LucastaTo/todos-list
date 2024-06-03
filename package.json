@@ -1,0 +1,27 @@
+{
+  "name": "todo-list",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "dotenv -- turbo dev",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "dependencies": {
+    "react-loader-spinner": "^5.3.4",
+    "styled-components": "^5.2.1"
+  },
+  "devDependencies": {
+    "@turbo/gen": "^1.9.7",
+    "eslint": "^8.57.0",
+    "eslint-config-custom": "*",
+    "prettier": "^3.2.5",
+    "turbo": "latest",
+    "dotenv-cli": "latest"
+  },
+  "packageManager": "npm@10.2.4",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}
