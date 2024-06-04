@@ -8,7 +8,7 @@
       "config": { "distDir": "dist/todo" }
     },
     {
-      "src": "apps/api",
+      "src": "apps/api/dist/server.js",
       "use": "@vercel/node"
     }
   ],

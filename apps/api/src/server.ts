@@ -1,12 +1,12 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import http from "http";
-import mongoose, { Error } from "mongoose";
+import mongoose from "mongoose";
 import { config } from "./config/config";
 import Logging from "./library/Logging";
 import authorRoutes from "./routes/Author";
 import todoRoutes from "./routes/Todo";
 
-const router = express();
+const app = express();
 
 /** Connect to Mongo */
 mongoose
@@ -17,17 +17,16 @@ mongoose
   })
   .catch((error) => Logging.error(error));
 
-/** Only Start Server if Mongoose Connects */
+/** Start Server */
 const StartServer = () => {
-  /** Log the request */
-  router.use((req, res, next) => {
-    /** Log the req */
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    /** Log the request */
     Logging.info(
-      `Incomming - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`
+      `Incoming - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`
     );
 
     res.on("finish", () => {
-      /** Log the res */
+      /** Log the response */
       Logging.info(
         `Result - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}] - STATUS: [${res.statusCode}]`
       );
@@ -36,18 +35,18 @@ const StartServer = () => {
     next();
   });
 
-  router.use(express.urlencoded({ extended: true }));
-  router.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json());
 
   /** Rules of our API */
-  router.use((req, res, next) => {
+  app.use((req: Request, res: Response, next: NextFunction) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
       "Access-Control-Allow-Headers",
       "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     );
 
-    if (req.method == "OPTIONS") {
+    if (req.method === "OPTIONS") {
       res.header(
         "Access-Control-Allow-Methods",
         "PUT, POST, PATCH, DELETE, GET"
@@ -59,28 +58,31 @@ const StartServer = () => {
   });
 
   /** Routes */
-  router.use("/authors", authorRoutes);
-  router.use("/todos", todoRoutes);
+  app.use("/api/authors", authorRoutes);
+  app.use("/api/todos", todoRoutes);
 
   /** Healthcheck */
-  router.get("/ping", (req, res, next) =>
+  app.get("/ping", (req: Request, res: Response) =>
     res.status(200).json({ hello: "world" })
   );
 
   /** Error handling */
-  router.use((req, res, next) => {
-    const error = new Error("Not found");
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    const error = new Error("Not found") as any; // Cast to any to access 'status'
+    error.status = 404;
+    next(error);
+  });
 
+  app.use((error: any, req: Request, res: Response, next: NextFunction) => {
     Logging.error(error);
 
-    res.status(404).json({
+    res.status(error.status || 500).json({
       message: error.message,
     });
   });
 
-  http
-    .createServer(router)
-    .listen(config.server.port, () =>
-      Logging.info(`Server is running on port ${config.server.port}`)
-    );
+  /** Start HTTP server */
+  http.createServer(app).listen(config.server.port, () => {
+    Logging.info(`Server is running on port ${config.server.port}`);
+  });
 };
