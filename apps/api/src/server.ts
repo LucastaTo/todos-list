@@ -58,8 +58,8 @@ const StartServer = () => {
   });
 
   /** Routes */
-  app.use("/api/authors", authorRoutes);
-  app.use("/api/todos", todoRoutes);
+  app.use("/authors", authorRoutes);
+  app.use("/todos", todoRoutes);
 
   /** Healthcheck */
   app.get("/ping", (req: Request, res: Response) =>
