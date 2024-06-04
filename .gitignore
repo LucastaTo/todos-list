@@ -23,7 +23,7 @@ dist-ssr
 node_modules
 /bak
 
-ecosystem.config
+ecosystem.config.js
 
 
 # misc
