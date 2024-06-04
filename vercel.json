@@ -5,15 +5,15 @@
     {
       "src": "apps/todo",
       "use": "@vercel/static-build",
-      "config": { "distDir": "dist/todo" }
+      "config": { "distDir": "dist" }
     },
     {
-      "src": "apps/api/src/server.ts",
+      "src": "apps/api/dist/server.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/apps/api/src/server.ts" },
+    { "src": "/api/(.*)", "dest": "/apps/api/dist/server.js" },
     { "src": "/(.*)", "dest": "/apps/todo/$1" }
   ]
 }
