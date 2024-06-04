@@ -13,7 +13,8 @@
       "config": {
         "maxDuration": 60,
         "memory": 1024,
-        "buildCommand": "npm run build"
+        "buildCommand": "npm run build",
+        "developmentCommand": "npm run dev"
       }
     }
   ],
