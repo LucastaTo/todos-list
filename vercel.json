@@ -8,12 +8,12 @@
       "config": { "distDir": "dist/todo" }
     },
     {
-      "src": "apps/api",
+      "src": "apps/api/src/server.ts",
       "use": "@vercel/node"
     }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/apps/api/dist/$1" },
+    { "src": "/api/(.*)", "dest": "/apps/api/src/server.ts" },
     { "src": "/(.*)", "dest": "/apps/todo/$1" }
   ]
 }
