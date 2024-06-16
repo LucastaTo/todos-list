@@ -5,6 +5,7 @@ import { config } from "./config/config";
 import Logging from "./library/Logging";
 import authorRoutes from "./routes/Author";
 import todoRoutes from "./routes/Todo";
+import cors from "cors"; 
 
 const app = express();
 
@@ -37,6 +38,8 @@ const StartServer = () => {
 
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
+  /** CORS Configuration */
+  app.use(cors());
 
   /** Rules of our API */
   app.use((req: Request, res: Response, next: NextFunction) => {
