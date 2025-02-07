@@ -5,7 +5,9 @@ import { config } from "./config/config";
 import Logging from "./library/Logging";
 import authorRoutes from "./routes/Author";
 import todoRoutes from "./routes/Todo";
-import cors from "cors"; 
+import wordRoutes from "./routes/Word";
+import scoreRoutes from "./routes/Score";
+import cors from "cors";
 
 const app = express();
 
@@ -63,6 +65,8 @@ const StartServer = () => {
   /** Routes */
   app.use("/authors", authorRoutes);
   app.use("/todos", todoRoutes);
+  app.use("/words", wordRoutes);
+  app.use("/scores", scoreRoutes);
 
   /** Healthcheck */
   app.get("/ping", (req: Request, res: Response) =>

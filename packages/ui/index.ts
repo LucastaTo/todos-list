@@ -14,6 +14,7 @@ import {
   CardTitle,
 } from "./card/card";
 import Text from "./text";
+import ProgressBar from "./progress-bar";
 import { Anchor } from "./anchor";
 import { Col, Container, Row } from "./grid/grid";
 import { Spinner } from "./spinner/spinner";
@@ -68,4 +69,5 @@ export {
   CardDeck,
   CardColumns,
   Text,
+  ProgressBar,
 };
