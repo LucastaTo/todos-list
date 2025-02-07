@@ -2,8 +2,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const MONGO_USERNAME = process.env.MONGO_USERNAME || "testing";
-const MONGO_PASSWORD = process.env.MONGO_PASSWORD || "6GQzSj7FbD0sLfuf";
+const MONGO_USERNAME = process.env.MONGO_USERNAME || "";
+const MONGO_PASSWORD = process.env.MONGO_PASSWORD || "";
 const MONGO_URL = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@cluster0.ewcd5.mongodb.net/
 `;
 

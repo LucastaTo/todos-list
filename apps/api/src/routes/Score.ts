@@ -6,6 +6,6 @@ const router = Router();
 router.post("/", ScoreController.createScore);
 router.get("/:authorId", ScoreController.getScoresByAuthor);
 router.get("/", ScoreController.getAllScores);
-router.get("/scores/top", ScoreController.getTopScores);
+router.get("/top", ScoreController.getTopScores);
 
 export default router;
